@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+actor User as u
+actor Admin as a
+
+package CreateMealPlan {
+    usecase "Create meal plan" as UC1
+    usecase "Find recipe and add recipe" as UC2
+    usecase "Choose day and meal type" as UC3
+}
+
+u -right-> UC1
+UC1 --> UC2
+UC2 --> UC3
+
+@enduml

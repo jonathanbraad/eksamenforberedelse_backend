@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+left to right direction
+User --> (Log in)
+User --> (Sign up)
+User --> (Find recipes)
+(Log in) --> (Create meal plan)
+(Log in) --> (View meal plans)
+(Log in) --> (Add recipe to meal plan)
+(Log in) --> (Edit meal plan)
+(Sign up) -> (Log in)
+
+Admin --> (View users)
+Admin --> (View saved meal plans)
+Admin --> (Edit saved meal plans)
+
+@enduml

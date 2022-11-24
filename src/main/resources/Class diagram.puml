@@ -1,0 +1,40 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class users {
+    - user_name
+    - user_pass
+}
+
+class user_roles {
+    - role_name
+    - user_name
+}
+
+class roles {
+    - role_name
+}
+
+class user_meal_plan {
+    - user_name
+    - meal_plan_name
+}
+
+class meal_plan {
+    - meal_plan_name
+    - meal_id
+}
+
+class meal {
+    - meal_id
+    - recipe_id
+    - day
+    - type
+}
+
+users "1" -- "1..*" user_roles
+user_roles "1..*" -- "1" roles
+users "1" -- "*" user_meal_plan
+user_meal_plan "*" -- "1" meal_plan
+meal_plan "*"--"1" meal
+@enduml
