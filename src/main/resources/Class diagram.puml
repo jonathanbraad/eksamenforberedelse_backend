@@ -2,34 +2,34 @@
 'https://plantuml.com/class-diagram
 
 class users {
-    - user_name
-    - user_pass
+    - user_name: String
+    - user_pass: String
 }
 
 class user_roles {
-    - role_name
-    - user_name
+    - role_name: String
+    - user_name: String
 }
 
 class roles {
-    - role_name
+    - role_name: String
 }
 
 class user_meal_plan {
-    - user_name
-    - meal_plan_name
+    - user_name: String
+    - meal_plan_name: String
 }
 
 class meal_plan {
-    - meal_plan_name
-    - meal_id
+    - meal_plan_name: String
+    - meal_id: int
 }
 
 class meal {
-    - meal_id
-    - recipe_id
-    - day
-    - type
+    - meal_id: int
+    - recipe_id: int
+    - day: String
+    - type: String
 }
 
 users "1" -- "1..*" user_roles
