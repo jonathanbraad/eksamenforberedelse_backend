@@ -30,11 +30,11 @@ public class MealPlanFacade {
         return emf.createEntityManager();
     }
 
-    public List<MealPlanDTO> getAllMealPlansByUser(String user_name) {
+    public List<MealPlanDTO> getAllMealPlansByUser(String username) {
         List<MealPlanDTO> mealPlanList = new ArrayList<>();
         EntityManager em = getEntityManager();
         TypedQuery<MealPlan> query = em.createQuery("SELECT m FROM MealPlan m JOIN m.users u WHERE u.userName = :user_name", MealPlan.class);
-        query.setParameter("user_name", user_name);
+        query.setParameter("user_name", username);
         query.getResultList().forEach(mealPlan -> {
             mealPlanList.add(new MealPlanDTO(mealPlan));
         });
