@@ -2,7 +2,9 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +38,12 @@ public class User implements Serializable {
             @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
     @ManyToMany
     private List<Role> roleList = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "user_meal_plan",
+            joinColumns = @JoinColumn(name = "user_name"),
+            inverseJoinColumns = @JoinColumn(name = "meal_plan_name"))
+    private Set<MealPlan> mealPlans = new LinkedHashSet<>();
 
     public List<String> getRolesAsStrings() {
         if (roleList.isEmpty()) {
@@ -89,4 +97,11 @@ public class User implements Serializable {
         roleList.add(userRole);
     }
 
+    public Set<MealPlan> getMealPlans() {
+        return mealPlans;
+    }
+
+    public void setMealPlans(Set<MealPlan> mealPlans) {
+        this.mealPlans = mealPlans;
+    }
 }

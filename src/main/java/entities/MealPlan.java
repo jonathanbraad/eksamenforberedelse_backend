@@ -13,7 +13,7 @@ public class MealPlan {
     @Size(max = 45)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_plan_name", nullable = false, length = 45)
-    private String id;
+    private String name;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -26,12 +26,12 @@ public class MealPlan {
             inverseJoinColumns = @JoinColumn(name = "user_name"))
     private Set<User> users = new LinkedHashSet<>();
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Meal getMeal() {
