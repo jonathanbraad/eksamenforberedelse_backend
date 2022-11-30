@@ -9,6 +9,17 @@ import java.util.Set;
 @Entity
 @Table(name = "meal")
 public class Meal {
+
+    public Meal() {
+    }
+
+    public Meal(Integer id, Integer recipeId, String day, String type) {
+        this.id = id;
+        this.recipeId = recipeId;
+        this.day = day;
+        this.type = type;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_id", nullable = false)

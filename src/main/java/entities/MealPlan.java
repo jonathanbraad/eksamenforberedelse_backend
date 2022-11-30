@@ -9,11 +9,21 @@ import java.util.Set;
 @Entity
 @Table(name = "meal_plan")
 public class MealPlan {
+
+    public MealPlan() {
+    }
+
+    public MealPlan(Integer id, String name, Meal meal) {
+        this.id = id;
+        this.name = name;
+        this.meal = meal;
+    }
+
     @Id
-    @Size(max = 45)
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_plan_id", nullable = false, length = 45)
-    private String id;
+    private Integer id;
 
     @Size(max = 45)
     @NotNull
@@ -31,11 +41,11 @@ public class MealPlan {
             inverseJoinColumns = @JoinColumn(name = "user_name"))
     private Set<User> users = new LinkedHashSet<>();
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

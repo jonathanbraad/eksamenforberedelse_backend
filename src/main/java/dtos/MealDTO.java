@@ -12,7 +12,7 @@ import java.util.Set;
  * A DTO for the {@link entities.Meal} entity
  */
 public class MealDTO implements Serializable {
-    private final Integer id;
+    private Integer id;
     @NotNull
     private final Integer recipeId;
     @Size(max = 45)
@@ -55,6 +55,10 @@ public class MealDTO implements Serializable {
 
     public Set<MealPlanInnerDTO> getMealPlans() {
         return mealPlans;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override

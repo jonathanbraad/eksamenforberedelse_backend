@@ -1,15 +1,17 @@
 package facades;
 
 import dtos.MealDTO;
-import dtos.MealPlanDTO;
 import entities.Meal;
 import entities.MealPlan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MealFacade {
 
@@ -40,5 +42,58 @@ public class MealFacade {
             mealList.add(new MealDTO(meal));
         });
         return mealList;
+    }
+
+    public MealDTO createMeal (MealDTO mealDTO) {
+        EntityManager em = getEntityManager();
+
+        Set<MealPlan> mealPlanSet = new LinkedHashSet<>();
+        mealDTO.getMealPlans().forEach(mealPlanInnerDTO -> {
+            mealPlanSet.add(em.find(MealPlan.class, mealPlanInnerDTO.getId()));
+        });
+        Meal newMeal = new Meal(mealDTO.getId(), mealDTO.getRecipeId(), mealDTO.getDay(), mealDTO.getType());
+        newMeal.setMealPlans(mealPlanSet);
+
+        em.getTransaction().begin();
+        em.persist(newMeal);
+        em.getTransaction().commit();
+        em.close();
+        return new MealDTO(newMeal);
+    }
+
+    public MealDTO updateMeal (MealDTO mealDTO) {
+        EntityManager em = getEntityManager();
+
+        Meal meal = em.find(Meal.class, mealDTO.getId());
+        if(meal == null) {
+            throw new EntityNotFoundException("No such meal with id:" + mealDTO.getId());
+        }
+        Set<MealPlan> mealPlanSet = new LinkedHashSet<>();
+        mealDTO.getMealPlans().forEach(mealPlanInnerDTO -> {
+            mealPlanSet.add(em.find(MealPlan.class, mealPlanInnerDTO.getId()));
+        });
+        Meal updatedMeal = new Meal(mealDTO.getId(), mealDTO.getRecipeId(), mealDTO.getDay(), mealDTO.getType());
+        updatedMeal.setMealPlans(mealPlanSet);
+
+        em.getTransaction().begin();
+        em.persist(updatedMeal);
+        em.getTransaction().commit();
+        em.close();
+        return new MealDTO(updatedMeal);
+    }
+
+    public MealDTO deleteMeal (Integer mealId) {
+        EntityManager em = getEntityManager();
+
+        Meal meal = em.find(Meal.class, mealId);
+        try {
+
+            em.getTransaction().begin();
+            em.remove(meal);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new MealDTO(meal);
     }
 }
