@@ -13,5 +13,9 @@ INSERT INTO meal_plan (meal_plan_id, meal_plan_name, meal_id) VALUES ('4','TestM
 INSERT INTO meal_plan (meal_plan_id, meal_plan_name, meal_id) VALUES ('5','TestMealPlan2','5');
 INSERT INTO meal_plan (meal_plan_id, meal_plan_name, meal_id) VALUES ('6','TestMealPlan','6');
 
-INSERT INTO user_meal_plan (user_name, meal_plan_name) VALUES ('user','TestMealPlan');
-INSERT INTO user_meal_plan (user_name, meal_plan_name) VALUES ('user','TestMealPlan2');
+INSERT INTO user_meal_plan (user_name, meal_plan_id) VALUES ('user','1');
+INSERT INTO user_meal_plan (user_name, meal_plan_id) VALUES ('user','2');
+INSERT INTO user_meal_plan (user_name, meal_plan_id) VALUES ('user','3');
+INSERT INTO user_meal_plan (user_name, meal_plan_id) VALUES ('user','4');
+INSERT INTO user_meal_plan (user_name, meal_plan_id) VALUES ('user','5');
+INSERT INTO user_meal_plan (user_name, meal_plan_id) VALUES ('user','6');

@@ -21,7 +21,7 @@ public class MealDTO implements Serializable {
     @Size(max = 45)
     @NotNull
     private final String type;
-    private final Set<MealPlanInnerDTO> mealPlans= new HashSet<>();
+    private final Set<MealPlanInnerDTO> mealPlans = new HashSet<>();
 
     public MealDTO(Integer id, Integer recipeId, String day, String type) {
         this.id = id;

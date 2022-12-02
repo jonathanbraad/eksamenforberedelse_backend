@@ -2,9 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.MealDTO;
 import dtos.MealPlanDTO;
-import entities.MealPlan;
 import facades.MealPlanFacade;
 import utils.EMF_Creator;
 

@@ -36,7 +36,7 @@ public class MealPlanFacade {
     public List<MealPlanDTO> getAllMealPlansByUser(String username) {
         List<MealPlanDTO> mealPlanList = new ArrayList<>();
         EntityManager em = getEntityManager();
-        TypedQuery<MealPlan> query = em.createQuery("SELECT m FROM MealPlan m JOIN m.users u WHERE u.userName = :user_name", MealPlan.class);
+        TypedQuery<MealPlan> query = em.createQuery("SELECT mp.mealPlanName FROM MealPlan mp JOIN mp.users u WHERE u.userName = :user_name", MealPlan.class);
         query.setParameter("user_name", username);
         query.getResultList().forEach(mealPlan -> {
             mealPlanList.add(new MealPlanDTO(mealPlan));
@@ -51,7 +51,7 @@ public class MealPlanFacade {
         mealPlanDTO.getUsers().forEach(userInnerDTO -> {
             userSet.add(em.find(User.class, userInnerDTO.getUserName()));
         });
-        MealPlan newMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getName(), mealPlanDTO.getMeal());
+        MealPlan newMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getMealPlanName(), mealPlanDTO.getMeal());
         newMealPlan.setUsers(userSet);
 
         em.getTransaction().begin();
@@ -72,7 +72,7 @@ public class MealPlanFacade {
         mealPlanDTO.getUsers().forEach(userInnerDTO -> {
             userSet.add(em.find(User.class, userInnerDTO.getUserName()));
         });
-        MealPlan updatedMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getName(), mealPlanDTO.getMeal());
+        MealPlan updatedMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlan.getMealPlanName(), mealPlanDTO.getMeal());
         updatedMealPlan.setUsers(userSet);
 
         em.getTransaction().begin();

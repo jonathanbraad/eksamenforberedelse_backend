@@ -13,22 +13,28 @@ public class MealPlan {
     public MealPlan() {
     }
 
-    public MealPlan(Integer id, String name, Meal meal) {
+    public MealPlan(Integer id, String mealPlanName, Meal meal) {
         this.id = id;
-        this.name = name;
+        this.mealPlanName = mealPlanName;
         this.meal = meal;
     }
 
+    public MealPlan(Integer id, String mealPlanName, Meal meal, Set<User> users) {
+        this.id = id;
+        this.mealPlanName = mealPlanName;
+        this.meal = meal;
+        this.users = users;
+    }
+
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "meal_plan_id", nullable = false, length = 45)
+    @Column(name = "meal_plan_id", nullable = false)
     private Integer id;
 
     @Size(max = 45)
     @NotNull
     @Column(name = "meal_plan_name", nullable = false, length = 45)
-    private String name;
+    private String mealPlanName;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -37,7 +43,7 @@ public class MealPlan {
 
     @ManyToMany
     @JoinTable(name = "user_meal_plan",
-            joinColumns = @JoinColumn(name = "meal_plan_name"),
+            joinColumns = @JoinColumn(name = "meal_plan_id"),
             inverseJoinColumns = @JoinColumn(name = "user_name"))
     private Set<User> users = new LinkedHashSet<>();
 
@@ -49,12 +55,12 @@ public class MealPlan {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getMealPlanName() {
+        return mealPlanName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMealPlanName(String mealPlanName) {
+        this.mealPlanName = mealPlanName;
     }
 
     public Meal getMeal() {

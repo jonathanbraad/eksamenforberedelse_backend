@@ -13,44 +13,45 @@ import java.util.Set;
  * A DTO for the {@link entities.MealPlan} entity
  */
 public class MealPlanDTO implements Serializable {
-    @NotNull
+
     private Integer id;
-    @NotNull
     @Size(max = 45)
-    private final String name;
+    @NotNull
+    private String mealPlanName;
     private final Meal meal;
     @NotNull
     private final Set<UserInnerDTO> users = new HashSet<>();
 
-    public MealPlanDTO(Integer id, String name, Meal meal) {
+    public MealPlanDTO(Integer id, String mealPlanName, Meal meal) {
         this.id = id;
-        this.name = name;
+        this.mealPlanName = mealPlanName;
         this.meal = meal;
     }
 
     public MealPlanDTO(MealPlan mealPlan) {
-        this.id = mealPlan.getId();
-        this.name = mealPlan.getName();
-        this.meal = mealPlan.getMeal();
+        this.id = getId();
+        this.mealPlanName = getMealPlanName();
+        this.meal = getMeal();
     }
+
 
     public Integer getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Meal getMeal() {
         return meal;
     }
 
+    public String getMealPlanName() {
+        return mealPlanName;
+    }
+
     public Set<UserInnerDTO> getUsers() {
         return users;
     }
 
-    public void setId(Integer id) {
+    public void setId(Integer  id) {
         this.id = id;
     }
 
@@ -58,7 +59,7 @@ public class MealPlanDTO implements Serializable {
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "id = " + id + ", " +
-                "name = " + name + ", " +
+                "name = " + mealPlanName + ", " +
                 "meal = " + meal + ", " +
                 "users = " + users + ")";
     }

@@ -42,7 +42,7 @@ public class User implements Serializable {
     @ManyToMany
     @JoinTable(name = "user_meal_plan",
             joinColumns = @JoinColumn(name = "user_name"),
-            inverseJoinColumns = @JoinColumn(name = "meal_plan_name"))
+            inverseJoinColumns = @JoinColumn(name = "meal_plan_id"))
     private Set<MealPlan> mealPlans = new LinkedHashSet<>();
 
     public List<String> getRolesAsStrings() {

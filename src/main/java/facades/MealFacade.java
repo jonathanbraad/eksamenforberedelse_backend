@@ -36,7 +36,7 @@ public class MealFacade {
     public List<MealDTO> getAllMealsByMealPlan(String mealPlan) {
         List<MealDTO> mealList = new ArrayList<>();
         EntityManager em = getEntityManager();
-        TypedQuery<Meal> query = em.createQuery("SELECT m FROM Meal m JOIN m.mealPlans mp WHERE mp.name = :meal_plan_name", Meal.class);
+        TypedQuery<Meal> query = em.createQuery("SELECT m FROM Meal m JOIN m.mealPlans mp WHERE mp.mealPlanName = :meal_plan_name", Meal.class);
         query.setParameter("meal_plan_name", mealPlan);
         query.getResultList().forEach(meal -> {
             mealList.add(new MealDTO(meal));

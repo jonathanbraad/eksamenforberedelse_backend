@@ -20,6 +20,14 @@ public class Meal {
         this.type = type;
     }
 
+    public Meal(Integer id, Integer recipeId, String day, String type, Set<MealPlan> mealPlans) {
+        this.id = id;
+        this.recipeId = recipeId;
+        this.day = day;
+        this.type = type;
+        this.mealPlans = mealPlans;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_id", nullable = false)
