@@ -31,12 +31,12 @@ public class MealPlanResource {
     }
 
     @POST
-    @Path("create")
+    @Path("create/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response createMeal(String jsonInput){
+    public Response createMealPlan(@PathParam("id") Integer id, String jsonInput){
         MealPlanDTO mealPlanDTO = gson.fromJson(jsonInput, MealPlanDTO.class);
-        MealPlanDTO returned = facade.createMealPlan(mealPlanDTO);
+        MealPlanDTO returned = facade.createMealPlan(mealPlanDTO, id);
         return Response.ok().entity(gson.toJson(returned)).build();
     }
 
@@ -44,7 +44,7 @@ public class MealPlanResource {
     @Path("update/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response updateMeal(@PathParam("id") Integer id, String jsonInput){
+    public Response updateMealPlan(@PathParam("id") Integer id, String jsonInput){
         MealPlanDTO mealPlanDTO = gson.fromJson(jsonInput, MealPlanDTO.class);
         mealPlanDTO.setId(id);
         MealPlanDTO returned = facade.updateMealPlan(mealPlanDTO);
@@ -54,7 +54,7 @@ public class MealPlanResource {
     @DELETE
     @Path("delete/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response delete(@PathParam("id") Integer id) {
+    public Response deleteMealPlan(@PathParam("id") Integer id) {
         MealPlanDTO mealPlanDTO = facade.deleteMealPlan(id);
         return Response.ok().entity(gson.toJson(mealPlanDTO)).build();
     }

@@ -13,14 +13,14 @@ public class Meal {
     public Meal() {
     }
 
-    public Meal(Integer id, Integer recipeId, String day, String type) {
+    public Meal(Integer id, long recipeId, String day, String type) {
         this.id = id;
         this.recipeId = recipeId;
         this.day = day;
         this.type = type;
     }
 
-    public Meal(Integer id, Integer recipeId, String day, String type, Set<MealPlan> mealPlans) {
+    public Meal(Integer id, long recipeId, String day, String type, Set<MealPlan> mealPlans) {
         this.id = id;
         this.recipeId = recipeId;
         this.day = day;
@@ -35,7 +35,7 @@ public class Meal {
 
     @NotNull
     @Column(name = "recipe_id", nullable = false)
-    private Integer recipeId;
+    private Long recipeId;
 
     @Size(max = 45)
     @NotNull
@@ -58,11 +58,11 @@ public class Meal {
         this.id = id;
     }
 
-    public Integer getRecipeId() {
+    public Long getRecipeId() {
         return recipeId;
     }
 
-    public void setRecipeId(Integer recipeId) {
+    public void setRecipeId(Long recipeId) {
         this.recipeId = recipeId;
     }
 

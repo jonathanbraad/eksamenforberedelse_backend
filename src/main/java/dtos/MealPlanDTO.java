@@ -17,7 +17,7 @@ public class MealPlanDTO implements Serializable {
     private Integer id;
     @Size(max = 45)
     @NotNull
-    private String mealPlanName;
+    private final String mealPlanName;
     private final Meal meal;
     @NotNull
     private final Set<UserInnerDTO> users = new HashSet<>();

@@ -14,7 +14,7 @@ import java.util.Set;
 public class MealDTO implements Serializable {
     private Integer id;
     @NotNull
-    private final Integer recipeId;
+    private final long recipeId;
     @Size(max = 45)
     @NotNull
     private final String day;
@@ -23,7 +23,7 @@ public class MealDTO implements Serializable {
     private final String type;
     private final Set<MealPlanInnerDTO> mealPlans = new HashSet<>();
 
-    public MealDTO(Integer id, Integer recipeId, String day, String type) {
+    public MealDTO(Integer id, long recipeId, String day, String type) {
         this.id = id;
         this.recipeId = recipeId;
         this.day = day;
@@ -41,7 +41,7 @@ public class MealDTO implements Serializable {
         return id;
     }
 
-    public Integer getRecipeId() {
+    public long getRecipeId() {
         return recipeId;
     }
 

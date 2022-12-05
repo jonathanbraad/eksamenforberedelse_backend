@@ -47,12 +47,12 @@ public class MealFacade {
     public MealDTO createMeal (MealDTO mealDTO) {
         EntityManager em = getEntityManager();
 
-        Set<MealPlan> mealPlanSet = new LinkedHashSet<>();
-        mealDTO.getMealPlans().forEach(mealPlanInnerDTO -> {
-            mealPlanSet.add(em.find(MealPlan.class, mealPlanInnerDTO.getId()));
-        });
+        //Set<MealPlan> mealPlanSet = new LinkedHashSet<>();
+        //mealDTO.getMealPlans().forEach(mealPlanInnerDTO -> {
+           // mealPlanSet.add(em.find(MealPlan.class, mealPlanInnerDTO.getId()));
+       // });
         Meal newMeal = new Meal(mealDTO.getId(), mealDTO.getRecipeId(), mealDTO.getDay(), mealDTO.getType());
-        newMeal.setMealPlans(mealPlanSet);
+       // newMeal.setMealPlans(mealPlanSet);
 
         em.getTransaction().begin();
         em.persist(newMeal);

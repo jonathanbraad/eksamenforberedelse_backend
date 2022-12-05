@@ -1,6 +1,7 @@
 package facades;
 
 import dtos.MealPlanDTO;
+import entities.Meal;
 import entities.MealPlan;
 import entities.User;
 
@@ -44,15 +45,16 @@ public class MealPlanFacade {
         return mealPlanList;
     }
 
-    public MealPlanDTO createMealPlan (MealPlanDTO mealPlanDTO) {
+    public MealPlanDTO createMealPlan(MealPlanDTO mealPlanDTO, int mealId) {
         EntityManager em = getEntityManager();
 
-        Set<User> userSet = new LinkedHashSet<>();
-        mealPlanDTO.getUsers().forEach(userInnerDTO -> {
-            userSet.add(em.find(User.class, userInnerDTO.getUserName()));
-        });
-        MealPlan newMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getMealPlanName(), mealPlanDTO.getMeal());
-        newMealPlan.setUsers(userSet);
+        //Set<User> userSet = new LinkedHashSet<>();
+        //mealPlanDTO.getUsers().forEach(userInnerDTO -> {
+            //userSet.add(em.find(User.class, userInnerDTO.getUserName()));
+        //});
+        Meal meal = em.find(Meal.class, mealId);
+        MealPlan newMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getMealPlanName(), meal);
+        //newMealPlan.setUsers(userSet);
 
         em.getTransaction().begin();
         em.persist(newMealPlan);
