@@ -2,16 +2,14 @@ package facades;
 
 import dtos.MealDTO;
 import entities.Meal;
-import entities.MealPlan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
+
 
 public class MealFacade {
 
@@ -47,12 +45,7 @@ public class MealFacade {
     public MealDTO createMeal (MealDTO mealDTO) {
         EntityManager em = getEntityManager();
 
-        //Set<MealPlan> mealPlanSet = new LinkedHashSet<>();
-        //mealDTO.getMealPlans().forEach(mealPlanInnerDTO -> {
-           // mealPlanSet.add(em.find(MealPlan.class, mealPlanInnerDTO.getId()));
-       // });
         Meal newMeal = new Meal(mealDTO.getId(), mealDTO.getRecipeId(), mealDTO.getDay(), mealDTO.getType());
-       // newMeal.setMealPlans(mealPlanSet);
 
         em.getTransaction().begin();
         em.persist(newMeal);
@@ -68,15 +61,11 @@ public class MealFacade {
         if(meal == null) {
             throw new EntityNotFoundException("No such meal with id:" + mealDTO.getId());
         }
-        Set<MealPlan> mealPlanSet = new LinkedHashSet<>();
-        mealDTO.getMealPlans().forEach(mealPlanInnerDTO -> {
-            mealPlanSet.add(em.find(MealPlan.class, mealPlanInnerDTO.getId()));
-        });
+
         Meal updatedMeal = new Meal(mealDTO.getId(), mealDTO.getRecipeId(), mealDTO.getDay(), mealDTO.getType());
-        updatedMeal.setMealPlans(mealPlanSet);
 
         em.getTransaction().begin();
-        em.persist(updatedMeal);
+        em.merge(updatedMeal);
         em.getTransaction().commit();
         em.close();
         return new MealDTO(updatedMeal);

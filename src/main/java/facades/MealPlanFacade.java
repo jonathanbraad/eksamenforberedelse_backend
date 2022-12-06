@@ -1,6 +1,7 @@
 package facades;
 
 import dtos.MealPlanDTO;
+import dtos.UserDTO;
 import entities.Meal;
 import entities.MealPlan;
 import entities.User;
@@ -45,16 +46,16 @@ public class MealPlanFacade {
         return mealPlanList;
     }
 
-    public MealPlanDTO createMealPlan(MealPlanDTO mealPlanDTO, int mealId) {
+    public MealPlanDTO createMealPlan(MealPlanDTO mealPlanDTO, int mealId, String username) {
         EntityManager em = getEntityManager();
 
-        //Set<User> userSet = new LinkedHashSet<>();
-        //mealPlanDTO.getUsers().forEach(userInnerDTO -> {
-            //userSet.add(em.find(User.class, userInnerDTO.getUserName()));
-        //});
+        List<User> userList = new ArrayList<>();
+        User user = em.find(User.class, username);
+        userList.add(user);
+        mealPlanDTO.setUsers(userList);
+
         Meal meal = em.find(Meal.class, mealId);
-        MealPlan newMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getMealPlanName(), meal);
-        //newMealPlan.setUsers(userSet);
+        MealPlan newMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getMealPlanName(), meal, mealPlanDTO.getUsers());
 
         em.getTransaction().begin();
         em.persist(newMealPlan);
@@ -63,22 +64,19 @@ public class MealPlanFacade {
         return new MealPlanDTO(newMealPlan);
     }
 
-    public MealPlanDTO updateMealPlan (MealPlanDTO mealPlanDTO) {
+    public MealPlanDTO updateMealPlan (MealPlanDTO mealPlanDTO, int mealId) {
         EntityManager em = getEntityManager();
 
         MealPlan mealPlan = em.find(MealPlan.class, mealPlanDTO.getId());
         if(mealPlan == null) {
-            throw new EntityNotFoundException("No such meal plan with id:" + mealPlanDTO.getId());
+            throw new EntityNotFoundException("No such meal plan with id: " + mealPlanDTO.getId());
         }
-        Set<User> userSet = new LinkedHashSet<>();
-        mealPlanDTO.getUsers().forEach(userInnerDTO -> {
-            userSet.add(em.find(User.class, userInnerDTO.getUserName()));
-        });
-        MealPlan updatedMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlan.getMealPlanName(), mealPlanDTO.getMeal());
-        updatedMealPlan.setUsers(userSet);
+
+        Meal meal = em.find(Meal.class, mealId);
+        MealPlan updatedMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlan.getMealPlanName(), meal);
 
         em.getTransaction().begin();
-        em.persist(updatedMealPlan);
+        em.merge(updatedMealPlan);
         em.getTransaction().commit();
         em.close();
         return new MealPlanDTO(updatedMealPlan);

@@ -2,11 +2,14 @@ package dtos;
 
 import entities.Meal;
 import entities.MealPlan;
+import entities.User;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,7 +23,7 @@ public class MealPlanDTO implements Serializable {
     private final String mealPlanName;
     private final Meal meal;
     @NotNull
-    private final Set<UserInnerDTO> users = new HashSet<>();
+    private List<User> users = new ArrayList<>();
 
     public MealPlanDTO(Integer id, String mealPlanName, Meal meal) {
         this.id = id;
@@ -29,9 +32,10 @@ public class MealPlanDTO implements Serializable {
     }
 
     public MealPlanDTO(MealPlan mealPlan) {
-        this.id = getId();
-        this.mealPlanName = getMealPlanName();
-        this.meal = getMeal();
+        this.id = mealPlan.getId();
+        this.mealPlanName = mealPlan.getMealPlanName();
+        this.meal = mealPlan.getMeal();
+        this.users = mealPlan.getUsers();
     }
 
 
@@ -47,12 +51,16 @@ public class MealPlanDTO implements Serializable {
         return mealPlanName;
     }
 
-    public Set<UserInnerDTO> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
     public void setId(Integer  id) {
         this.id = id;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override
