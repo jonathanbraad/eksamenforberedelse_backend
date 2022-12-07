@@ -3,7 +3,9 @@ package entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +21,7 @@ public class MealPlan {
         this.meal = meal;
     }
 
-    public MealPlan(Integer id, String mealPlanName, Meal meal, Set<User> users) {
+    public MealPlan(Integer id, String mealPlanName, Meal meal, List<User> users) {
         this.id = id;
         this.mealPlanName = mealPlanName;
         this.meal = meal;
@@ -45,7 +47,7 @@ public class MealPlan {
     @JoinTable(name = "user_meal_plan",
             joinColumns = @JoinColumn(name = "meal_plan_id"),
             inverseJoinColumns = @JoinColumn(name = "user_name"))
-    private Set<User> users = new LinkedHashSet<>();
+    private List<User> users = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -71,11 +73,11 @@ public class MealPlan {
         this.meal = meal;
     }
 
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
