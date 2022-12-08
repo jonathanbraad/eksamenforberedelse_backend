@@ -41,13 +41,13 @@ public class MealPlanResource {
     }
 
     @PUT
-    @Path("update/{mealPlanId}/{mealId}")
+    @Path("update/{mealPlanId}/{mealId}/{username}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response updateMealPlan(@PathParam("mealPlanId") Integer mealPlanId, @PathParam("mealId") Integer mealId, String jsonInput){
+    public Response updateMealPlan(@PathParam("mealPlanId") Integer mealPlanId, @PathParam("mealId") Integer mealId, @PathParam("username") String username, String jsonInput){
         MealPlanDTO mealPlanDTO = gson.fromJson(jsonInput, MealPlanDTO.class);
         mealPlanDTO.setId(mealPlanId);
-        MealPlanDTO returned = facade.updateMealPlan(mealPlanDTO, mealId);
+        MealPlanDTO returned = facade.updateMealPlan(mealPlanDTO, mealId, username);
         return Response.ok().entity(gson.toJson(returned)).build();
     }
 

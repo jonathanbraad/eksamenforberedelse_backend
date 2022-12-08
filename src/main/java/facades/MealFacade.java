@@ -76,7 +76,6 @@ public class MealFacade {
 
         Meal meal = em.find(Meal.class, mealId);
         try {
-
             em.getTransaction().begin();
             em.remove(meal);
             em.getTransaction().commit();

@@ -64,8 +64,12 @@ public class MealPlanFacade {
         return new MealPlanDTO(newMealPlan);
     }
 
-    public MealPlanDTO updateMealPlan (MealPlanDTO mealPlanDTO, int mealId) {
+    public MealPlanDTO updateMealPlan (MealPlanDTO mealPlanDTO, int mealId, String username) {
         EntityManager em = getEntityManager();
+
+        List<User> userList = new ArrayList<>();
+        User user = em.find(User.class, username);
+        userList.add(user);
 
         MealPlan mealPlan = em.find(MealPlan.class, mealPlanDTO.getId());
         if(mealPlan == null) {
@@ -73,7 +77,7 @@ public class MealPlanFacade {
         }
 
         Meal meal = em.find(Meal.class, mealId);
-        MealPlan updatedMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getMealPlanName(), meal);
+        MealPlan updatedMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getMealPlanName(), meal, userList);
 
         em.getTransaction().begin();
         em.merge(updatedMealPlan);
