@@ -21,29 +21,22 @@ public class MealPlanDTO implements Serializable {
     @Size(max = 45)
     @NotNull
     private final String mealPlanName;
-    private final MealDTO meal;
     @NotNull
     private final List<UserInnerDTO> users = new ArrayList<>();
 
-    public MealPlanDTO(Integer id, String mealPlanName, MealDTO meal) {
+    public MealPlanDTO(Integer id, String mealPlanName) {
         this.id = id;
         this.mealPlanName = mealPlanName;
-        this.meal = meal;
     }
 
     public MealPlanDTO(MealPlan mealPlan) {
         this.id = mealPlan.getId();
         this.mealPlanName = mealPlan.getMealPlanName();
-        this.meal = new MealDTO(mealPlan.getMeal());
     }
 
 
     public Integer getId() {
         return id;
-    }
-
-    public MealDTO getMeal() {
-        return meal;
     }
 
     public String getMealPlanName() {
@@ -63,7 +56,6 @@ public class MealPlanDTO implements Serializable {
         return getClass().getSimpleName() + "(" +
                 "id = " + id + ", " +
                 "name = " + mealPlanName + ", " +
-                "meal = " + meal + ", " +
                 "users = " + users + ")";
     }
 

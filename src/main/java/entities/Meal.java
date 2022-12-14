@@ -10,24 +10,6 @@ import java.util.Set;
 @Table(name = "meal")
 public class Meal {
 
-    public Meal() {
-    }
-
-    public Meal(Integer id, long recipeId, String day, String type) {
-        this.id = id;
-        this.recipeId = recipeId;
-        this.day = day;
-        this.type = type;
-    }
-
-    public Meal(Integer id, long recipeId, String day, String type, Set<MealPlan> mealPlans) {
-        this.id = id;
-        this.recipeId = recipeId;
-        this.day = day;
-        this.type = type;
-        this.mealPlans = mealPlans;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_id", nullable = false)
@@ -47,8 +29,37 @@ public class Meal {
     @Column(name = "type", nullable = false, length = 45)
     private String type;
 
-    @OneToMany(mappedBy = "meal")
-    private Set<MealPlan> mealPlans = new LinkedHashSet<>();
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "meal_plan_id", nullable = false)
+    private MealPlan mealPlan;
+
+
+    public Meal() {
+    }
+
+    public Meal(Integer id, long recipeId, String day, String type) {
+        this.id = id;
+        this.recipeId = recipeId;
+        this.day = day;
+        this.type = type;
+    }
+
+    public Meal(Integer id, long recipeId, String day, String type, MealPlan mealPlan) {
+        this.id = id;
+        this.recipeId = recipeId;
+        this.day = day;
+        this.type = type;
+        this.mealPlan = mealPlan;
+    }
+
+    public MealPlan getMealPlan() {
+        return mealPlan;
+    }
+
+    public void setMealPlan(MealPlan mealPlan) {
+        this.mealPlan = mealPlan;
+    }
 
     public Integer getId() {
         return id;
@@ -82,12 +93,5 @@ public class Meal {
         this.type = type;
     }
 
-    public Set<MealPlan> getMealPlans() {
-        return mealPlans;
-    }
-
-    public void setMealPlans(Set<MealPlan> mealPlans) {
-        this.mealPlans = mealPlans;
-    }
 
 }

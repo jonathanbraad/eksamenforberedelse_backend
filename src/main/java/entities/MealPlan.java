@@ -12,22 +12,6 @@ import java.util.Set;
 @Table(name = "meal_plan")
 public class MealPlan {
 
-    public MealPlan() {
-    }
-
-    public MealPlan(Integer id, String mealPlanName, Meal meal) {
-        this.id = id;
-        this.mealPlanName = mealPlanName;
-        this.meal = meal;
-    }
-
-    public MealPlan(Integer id, String mealPlanName, Meal meal, List<User> users) {
-        this.id = id;
-        this.mealPlanName = mealPlanName;
-        this.meal = meal;
-        this.users = users;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_plan_id", nullable = false)
@@ -38,16 +22,43 @@ public class MealPlan {
     @Column(name = "meal_plan_name", nullable = false, length = 45)
     private String mealPlanName;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "meal_id", nullable = false)
-    private Meal meal;
+    @OneToMany(mappedBy = "mealPlan")
+    private Set<Meal> meals = new LinkedHashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_meal_plan",
             joinColumns = @JoinColumn(name = "meal_plan_id"),
             inverseJoinColumns = @JoinColumn(name = "user_name"))
     private List<User> users = new ArrayList<>();
+
+    public MealPlan() {
+    }
+
+    public MealPlan(Integer id, String mealPlanName) {
+        this.id = id;
+        this.mealPlanName = mealPlanName;
+    }
+
+    public MealPlan(Integer id, String mealPlanName, List<User> users) {
+        this.id = id;
+        this.mealPlanName = mealPlanName;
+        this.users = users;
+    }
+
+    public MealPlan(Integer id, String mealPlanName, Set<Meal> meals, List<User> users) {
+        this.id = id;
+        this.mealPlanName = mealPlanName;
+        this.meals = meals;
+        this.users = users;
+    }
+
+    public Set<Meal> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(Set<Meal> meals) {
+        this.meals = meals;
+    }
 
     public Integer getId() {
         return id;
@@ -63,14 +74,6 @@ public class MealPlan {
 
     public void setMealPlanName(String mealPlanName) {
         this.mealPlanName = mealPlanName;
-    }
-
-    public Meal getMeal() {
-        return meal;
-    }
-
-    public void setMeal(Meal meal) {
-        this.meal = meal;
     }
 
     public List<User> getUsers() {

@@ -47,15 +47,14 @@ public class MealPlanFacade {
         return mealPlanList;
     }
 
-    public MealPlanDTO createMealPlan(MealPlanDTO mealPlanDTO, int mealId, String username) {
+    public MealPlanDTO createMealPlan(MealPlanDTO mealPlanDTO, String username) {
         EntityManager em = getEntityManager();
 
         List<User> userList = new ArrayList<>();
         User user = em.find(User.class, username);
         userList.add(user);
 
-        Meal meal = em.find(Meal.class, mealId);
-        MealPlan newMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getMealPlanName(), meal, userList);
+        MealPlan newMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getMealPlanName(), userList);
 
         em.getTransaction().begin();
         em.persist(newMealPlan);
@@ -64,7 +63,7 @@ public class MealPlanFacade {
         return new MealPlanDTO(newMealPlan);
     }
 
-    public MealPlanDTO updateMealPlan (MealPlanDTO mealPlanDTO, int mealId, String username) {
+    public MealPlanDTO updateMealPlan (MealPlanDTO mealPlanDTO, String username) {
         EntityManager em = getEntityManager();
 
         List<User> userList = new ArrayList<>();
@@ -76,8 +75,7 @@ public class MealPlanFacade {
             throw new EntityNotFoundException("No such meal plan with id: " + mealPlanDTO.getId());
         }
 
-        Meal meal = em.find(Meal.class, mealId);
-        MealPlan updatedMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getMealPlanName(), meal, userList);
+        MealPlan updatedMealPlan = new MealPlan(mealPlanDTO.getId(), mealPlanDTO.getMealPlanName(), userList);
 
         em.getTransaction().begin();
         em.merge(updatedMealPlan);

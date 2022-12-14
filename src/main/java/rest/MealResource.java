@@ -32,23 +32,23 @@ public class MealResource {
     }
 
     @POST
-    @Path("create")
+    @Path("create/{meal_plan_id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response createMeal(String jsonInput){
+    public Response createMeal(@PathParam("meal_plan_id") Integer id, String jsonInput){
         MealDTO mealDTO = gson.fromJson(jsonInput, MealDTO.class);
-        MealDTO returned = facade.createMeal(mealDTO);
+        MealDTO returned = facade.createMeal(mealDTO, id);
         return Response.ok().entity(gson.toJson(returned)).build();
     }
 
     @PUT
-    @Path("update/{id}")
+    @Path("update/{meal_id}/{meal_plan_id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response updateMeal(@PathParam("id") Integer id, String jsonInput){
+    public Response updateMeal(@PathParam("meal_id") Integer mealId, @PathParam("meal_plan_id") Integer id, String jsonInput){
         MealDTO mealDTO = gson.fromJson(jsonInput, MealDTO.class);
-        mealDTO.setId(id);
-        MealDTO returned = facade.updateMeal(mealDTO);
+        mealDTO.setId(mealId);
+        MealDTO returned = facade.updateMeal(mealDTO, id);
         return Response.ok().entity(gson.toJson(returned)).build();
     }
 

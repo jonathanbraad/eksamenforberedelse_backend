@@ -2,6 +2,7 @@ package facades;
 
 import dtos.MealDTO;
 import entities.Meal;
+import entities.MealPlan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -34,7 +35,7 @@ public class MealFacade {
     public List<MealDTO> getAllMealsByMealPlan(String mealPlan) {
         List<MealDTO> mealList = new ArrayList<>();
         EntityManager em = getEntityManager();
-        TypedQuery<Meal> query = em.createQuery("SELECT m FROM Meal m JOIN m.mealPlans mp WHERE mp.mealPlanName = :meal_plan_name", Meal.class);
+        TypedQuery<Meal> query = em.createQuery("SELECT m FROM Meal m JOIN m.mealPlan mp WHERE mp.mealPlanName = :meal_plan_name", Meal.class);
         query.setParameter("meal_plan_name", mealPlan);
         query.getResultList().forEach(meal -> {
             mealList.add(new MealDTO(meal));
@@ -42,10 +43,11 @@ public class MealFacade {
         return mealList;
     }
 
-    public MealDTO createMeal (MealDTO mealDTO) {
+    public MealDTO createMeal (MealDTO mealDTO, int mealPlanId) {
         EntityManager em = getEntityManager();
 
-        Meal newMeal = new Meal(mealDTO.getId(), mealDTO.getRecipeId(), mealDTO.getDay(), mealDTO.getType());
+        MealPlan mealPlan = em.find(MealPlan.class, mealPlanId);
+        Meal newMeal = new Meal(mealDTO.getId(), mealDTO.getRecipeId(), mealDTO.getDay(), mealDTO.getType(), mealPlan);
 
         em.getTransaction().begin();
         em.persist(newMeal);
@@ -54,7 +56,7 @@ public class MealFacade {
         return new MealDTO(newMeal);
     }
 
-    public MealDTO updateMeal (MealDTO mealDTO) {
+    public MealDTO updateMeal (MealDTO mealDTO, int mealPlanId) {
         EntityManager em = getEntityManager();
 
         Meal meal = em.find(Meal.class, mealDTO.getId());
@@ -62,7 +64,8 @@ public class MealFacade {
             throw new EntityNotFoundException("No such meal with id:" + mealDTO.getId());
         }
 
-        Meal updatedMeal = new Meal(mealDTO.getId(), mealDTO.getRecipeId(), mealDTO.getDay(), mealDTO.getType());
+        MealPlan mealPlan = em.find(MealPlan.class, mealPlanId);
+        Meal updatedMeal = new Meal(mealDTO.getId(), mealDTO.getRecipeId(), mealDTO.getDay(), mealDTO.getType(), mealPlan);
 
         em.getTransaction().begin();
         em.merge(updatedMeal);
