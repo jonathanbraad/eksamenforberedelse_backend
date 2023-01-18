@@ -1,5 +1,7 @@
 package dtos;
 
+import entities.Roles;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -59,7 +61,7 @@ public class UserDTO implements Serializable {
     }
 
     /**
-     * A DTO for the {@link entities.Role} entity
+     * A DTO for the {@link Roles} entity
      */
     public static class RoleDto implements Serializable {
         @NotNull

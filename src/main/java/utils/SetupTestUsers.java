@@ -1,7 +1,7 @@
 package utils;
 
 
-import entities.Role;
+import entities.Roles;
 import entities.User;
 
 import javax.persistence.EntityManager;
@@ -28,8 +28,8 @@ public class SetupTestUsers {
       throw new UnsupportedOperationException("You have not changed the passwords");
 
     em.getTransaction().begin();
-    Role userRole = new Role("user");
-    Role adminRole = new Role("admin");
+    Roles userRole = new Roles("user");
+    Roles adminRole = new Roles("admin");
     user.addRole(userRole);
     admin.addRole(adminRole);
     both.addRole(userRole);
