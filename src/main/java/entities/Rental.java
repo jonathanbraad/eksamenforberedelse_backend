@@ -41,6 +41,9 @@ public class Rental {
     @JoinColumn(name = "house_id", nullable = false)
     private House house;
 
+    public Rental() {
+    }
+
     public Rental(Integer id, String startDate, String endDate, String priceAnnual, String deposit, String contactPerson, House house) {
         this.id = id;
         this.startDate = startDate;

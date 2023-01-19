@@ -2,8 +2,10 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.HouseDto;
 import dtos.MealDTO;
 import dtos.MealPlanDTO;
+import entities.House;
 import entities.Tenant;
 import entities.User;
 import facades.MealFacade;
@@ -64,6 +66,16 @@ public class TenantResource {
     @Produces({MediaType.APPLICATION_JSON})
     public void deleteMealPlan(@PathParam("id") int id) {
         tenantFacade.deleteRental(id);
+    }
+
+    @POST
+    @Path("createHouse/{house_id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createHouse(@PathParam("house_id") Integer id, String jsonInput){
+        HouseDto houseDTO = gson.fromJson(jsonInput, HouseDto.class);
+        HouseDto returned = tenantFacade.createHousedto(houseDTO, id);
+        return Response.ok().entity(gson.toJson(returned)).build();
     }
 }
 

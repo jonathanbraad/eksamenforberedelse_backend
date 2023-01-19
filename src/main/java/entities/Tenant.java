@@ -29,6 +29,10 @@ public class Tenant {
     @Column(name = "job", nullable = false, length = 45)
     private String job;
 
+    public Tenant() {
+
+    }
+
     public Integer getId() {
         return id;
     }
@@ -61,6 +65,13 @@ public class Tenant {
         this.job = job;
     }
 
+    public Tenant(Integer id, String name, String phone, String job) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.job = job;
+    }
+
     @Override
     public String toString() {
         return "Tenant{" +
@@ -70,4 +81,5 @@ public class Tenant {
                 ", job='" + job + '\'' +
                 '}';
     }
+
 }

@@ -75,4 +75,7 @@ public class House {
         this.city = city;
         this.job = job;
     }
+
+    public House() {
+    }
 }

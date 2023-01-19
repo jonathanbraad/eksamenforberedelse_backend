@@ -1,5 +1,7 @@
 package facades;
 
+import dtos.HouseDto;
+import dtos.MealDTO;
 import dtos.MealPlanDTO;
 import entities.*;
 import security.errorhandling.AuthenticationException;
@@ -103,6 +105,39 @@ public class TenantFacade {
         em.getTransaction().commit();
         em.close();
         return newRental;
+    }
+
+    public House CreateHouse (int house_id, String address, String city, String job)
+    {
+        EntityManager em = emf.createEntityManager();
+        House house = new House(house_id, address, city, job);
+        em.getTransaction().begin();
+        em.persist(house);
+        em.getTransaction().commit();
+        em.close();
+        return house;
+    }
+
+    public HouseDto createHousedto (HouseDto houseDto, int HouseId) {
+        EntityManager em = emf.createEntityManager();
+
+        House house = em.find(House.class, HouseId);
+        House newhouse = new House(houseDto.getId(), houseDto.getAddress(), houseDto.getCity(), houseDto.getJob());
+
+        em.getTransaction().begin();
+        em.persist(newhouse);
+        em.getTransaction().commit();
+        em.close();
+        return new HouseDto(newhouse);
+    }
+
+    public void CreateTenant (int tenant_id, String name, String phone, String job)
+    {
+        EntityManager em = emf.createEntityManager();
+        Tenant tenant = new Tenant(tenant_id, name, phone, job);
+        em.getTransaction().begin();
+        em.persist(tenant);
+        em.close();
     }
 
 
