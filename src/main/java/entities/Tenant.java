@@ -61,4 +61,13 @@ public class Tenant {
         this.job = job;
     }
 
+    @Override
+    public String toString() {
+        return "Tenant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", job='" + job + '\'' +
+                '}';
+    }
 }

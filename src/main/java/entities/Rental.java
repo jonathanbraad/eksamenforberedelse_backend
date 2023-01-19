@@ -41,6 +41,16 @@ public class Rental {
     @JoinColumn(name = "house_id", nullable = false)
     private House house;
 
+    public Rental(Integer id, String startDate, String endDate, String priceAnnual, String deposit, String contactPerson, House house) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.priceAnnual = priceAnnual;
+        this.deposit = deposit;
+        this.contactPerson = contactPerson;
+        this.house = house;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -97,4 +107,16 @@ public class Rental {
         this.house = house;
     }
 
+    @Override
+    public String toString() {
+        return "Rental{" +
+                "id=" + id +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", priceAnnual='" + priceAnnual + '\'' +
+                ", deposit='" + deposit + '\'' +
+                ", contactPerson='" + contactPerson + '\'' +
+                ", house=" + house +
+                '}';
+    }
 }

@@ -59,4 +59,20 @@ public class House {
         this.job = job;
     }
 
+    @Override
+    public String toString() {
+        return "House{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", job='" + job + '\'' +
+                '}';
+    }
+
+    public House(Integer id, String address, String city, String job) {
+        this.id = id;
+        this.address = address;
+        this.city = city;
+        this.job = job;
+    }
 }
